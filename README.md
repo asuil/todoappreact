@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## TODO App
+This project is an implementation of a simple to-do list app using the react framework.
+
 ## Available Scripts
 
 In the project directory, you can run:
