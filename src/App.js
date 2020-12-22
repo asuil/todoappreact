@@ -8,6 +8,10 @@ import TextField from '@material-ui/core/TextField';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Todo from './components/Todo';
 
+// back-end connection imports
+import { useEffect } from 'react';
+import axios from 'axios';
+
 
 // material-ui/core styles
 const useStyles = makeStyles({
@@ -98,30 +102,40 @@ function App() {
   const classes = useStyles();
 
   const [todos, setTodos] = React.useState([
-    { text: "Learn about React",
+    { title: "Learn about React",
       desc: "That front-end framework everyone is talking about",
-      isDone: false },
-    { text: "Meet friend for lunch",
+      done: false },
+    { title: "Meet friend for lunch",
       desc: "They're nice!",
-      isDone: false },
-    { text: "Build really cool todo app",
+      done: false },
+    { title: "Build really cool todo app",
       desc: "",
-      isDone: false }
+      done: false }
   ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+          "/api/v1/todos",
+      );
+      setTodos(result.data);
+    };
+    fetchData();
+  }, []);
 
   // add a new todo to the current list
   const addTodo = newTodo => {
     const newTodos = [...todos, {
-      text: newTodo.title,
+      title: newTodo.title,
       desc: newTodo.desc,
-      isDone: false }];
+      done: false }];
     setTodos(newTodos);
   };
 
   // set todo as done
   const completeTodo = index => {
     const newTodos = [...todos];
-    newTodos[index].isDone = true;
+    newTodos[index].done = true;
     setTodos(newTodos);
   };
 

@@ -45,10 +45,10 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
         <Card>
           <Grid container className={classes.todocardgrid}>
             <Grid item xs={6}>
-              <Typography className={classes.todotitle} style={{ textDecoration: todo.isDone ? "line-through" : "" }}>
-                {todo.text}
+              <Typography className={classes.todotitle} style={{ textDecoration: todo.done ? "line-through" : "" }}>
+                {todo.title}
               </Typography>
-              <Typography className={classes.todosubtitle} style={{ textDecoration: todo.isDone ? "line-through" : "" }}>
+              <Typography className={classes.todosubtitle} style={{ textDecoration: todo.done ? "line-through" : "" }}>
                 {todo.desc}
               </Typography>
             </Grid>
