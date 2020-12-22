@@ -47,8 +47,9 @@ function TodoForm({ addTodo }) {
     if (!value) return;
     // desc can be empty
     addTodo({
-      title: value,
-      desc: desc,
+        title: value,
+        desc: desc,
+        done: false,
     });
     setValue("");
     setDesc("");
@@ -102,14 +103,8 @@ function App() {
   const classes = useStyles();
 
   const [todos, setTodos] = React.useState([
-    { title: "Learn about React",
-      desc: "That front-end framework everyone is talking about",
-      done: false },
-    { title: "Meet friend for lunch",
-      desc: "They're nice!",
-      done: false },
-    { title: "Build really cool todo app",
-      desc: "",
+    { title: "No to-dos found",
+      desc: "Create a to-do to display here",
       done: false }
   ]);
 
@@ -125,25 +120,27 @@ function App() {
 
   // add a new todo to the current list
   const addTodo = newTodo => {
-    const newTodos = [...todos, {
-      title: newTodo.title,
-      desc: newTodo.desc,
-      done: false }];
-    setTodos(newTodos);
+      axios.post('/api/v1/todos', newTodo)
+          .then(r => setTodos([...todos, r.data]));
   };
 
   // set todo as done
-  const completeTodo = index => {
-    const newTodos = [...todos];
-    newTodos[index].done = true;
-    setTodos(newTodos);
+  const completeTodo = todoData => {
+      axios.put(`/api/v1/todos/${todoData.id}`, {todo: {done: true}})
+          .then(r => {
+              const newTodos = [...todos];
+              newTodos[todoData.index].done = true;
+              setTodos(newTodos);});
   };
 
   // remove todo from current list
-  const removeTodo = index => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+  const removeTodo = todoData => {
+      axios.delete(`/api/v1/todos/${todoData.id}`)
+          .then(r => {
+              const newTodos = [...todos];
+              newTodos.splice(todoData.index, 1);
+              setTodos(newTodos);
+          });  // catch error?
   };
 
   // CssBaseLine for compatibility

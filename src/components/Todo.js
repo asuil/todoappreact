@@ -58,7 +58,7 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
                     className={classes.todobutton}
                     variant="contained"
                     color="primary"
-                    onClick={() => completeTodo(index)}
+                    onClick={() => completeTodo({id: todo.id, index: index})}
                 >
                   Done!
                 </Button>
@@ -66,7 +66,7 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
                     className={classes.todobutton}
                     variant="contained"
                     color="primary"
-                    onClick={() => removeTodo(index)}
+                    onClick={() => removeTodo({id: todo.id, index: index})}
                 >
                   Delete
                 </Button>
